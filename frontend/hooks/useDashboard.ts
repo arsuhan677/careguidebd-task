@@ -7,7 +7,7 @@ export const useDashboard = () => {
     queryKey: ['dashboard'],
     queryFn: async (): Promise<IDashboardData> => {
       const res = await api.get('/dashboard');
-      return res.data.data;
+      return res.data;
     },
     staleTime: 5 * 60 * 1000,
   });
