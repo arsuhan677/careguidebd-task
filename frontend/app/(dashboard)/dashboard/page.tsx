@@ -21,7 +21,7 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">Dashboard</h1>
           <p className="text-sm text-gray-500">Overview of doctors, patients, and appointment management data.</p>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           <Skeleton className="h-32 w-full rounded-xl" />
           <Skeleton className="h-32 w-full rounded-xl" />
           <Skeleton className="h-32 w-full rounded-xl" />
@@ -30,6 +30,14 @@ export default function DashboardPage() {
         <div className="grid gap-4 lg:grid-cols-3">
           <Skeleton className="h-[350px] w-full rounded-xl lg:col-span-1" />
           <Skeleton className="h-[350px] w-full rounded-xl lg:col-span-2" />
+        </div>
+        <div className="grid gap-4 lg:grid-cols-3">
+          <Skeleton className="h-[350px] w-full rounded-xl lg:col-span-2" />
+          <Skeleton className="h-[350px] w-full rounded-xl lg:col-span-1" />
+        </div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Skeleton className="h-[400px] w-full rounded-xl" />
+          <Skeleton className="h-[400px] w-full rounded-xl" />
         </div>
       </div>
     );

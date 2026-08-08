@@ -69,31 +69,25 @@ export default function PatientsPage() {
       <div>
         <PatientToolbar onAddPatient={handleAdd} />
 
-        {isLoading ? (
-          <div className="space-y-3 bg-white p-6 rounded-xl border">
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-16 w-full" />
-            <Skeleton className="h-16 w-full" />
-            <Skeleton className="h-16 w-full" />
-          </div>
-        ) : error ? (
+        {error ? (
           <div className="p-8 text-center bg-white rounded-xl border border-red-200">
             <h3 className="text-lg font-medium text-red-800">Failed to load patients</h3>
             <p className="mt-2 text-sm text-red-600">{(error as Error).message}</p>
           </div>
-        ) : response ? (
+        ) : (
           <>
             <PatientTable
-              data={response.data}
+              data={response?.data || []}
+              isLoading={isLoading}
               onView={handleView}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
-            {response.pagination && response.pagination.totalPages > 1 && (
+            {response?.pagination && response.pagination.totalPages > 1 && (
               <PatientPagination pagination={response.pagination} />
             )}
           </>
-        ) : null}
+        )}
       </div>
 
       <PatientFormDialog

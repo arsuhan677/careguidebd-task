@@ -85,14 +85,7 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
             </div>
           </div>
 
-          {isLoading ? (
-            <div className="space-y-2 mt-4">
-              <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-12 w-full" />
-              <Skeleton className="h-12 w-full" />
-              <Skeleton className="h-12 w-full" />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-8 text-center rounded-xl border border-red-200 bg-red-50">
               <h3 className="text-sm font-medium text-red-800">Failed to load patients</h3>
               <p className="mt-1 text-xs text-red-600">{(error as Error).message}</p>
@@ -100,7 +93,7 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
                 Retry
               </Button>
             </div>
-          ) : !response || !response.data || response.data.length === 0 ? (
+          ) : !isLoading && (!response || !response.data || response.data.length === 0) ? (
             <div className="p-12 text-center border border-dashed rounded-xl bg-gray-50/50 mt-4">
               <p className="text-sm font-medium text-gray-900">
                 {search ? "No patients match your search." : "No patients found for this doctor."}
@@ -120,22 +113,35 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {response.data.map((patient) => (
-                    <TableRow key={patient._id}>
-                      <TableCell className="font-medium">{patient.name}</TableCell>
-                      <TableCell className="text-gray-500">{patient.age}</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className="bg-blue-50 text-blue-700">
-                          {patient.gender}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-gray-500">{patient.phone}</TableCell>
-                      <TableCell className="hidden md:table-cell text-gray-500">{patient.email}</TableCell>
-                      <TableCell className="hidden sm:table-cell text-gray-500">
-                        {format(new Date(patient.createdAt), 'MMM dd, yyyy')}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {isLoading ? (
+                    Array.from({ length: 5 }).map((_, idx) => (
+                      <TableRow key={`skeleton-${idx}`}>
+                        <TableCell><Skeleton className="h-4 w-[120px]" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-[30px]" /></TableCell>
+                        <TableCell><Skeleton className="h-5 w-[60px] rounded-full" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
+                        <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-[150px]" /></TableCell>
+                        <TableCell className="hidden sm:table-cell"><Skeleton className="h-4 w-[90px]" /></TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    response?.data.map((patient) => (
+                      <TableRow key={patient._id}>
+                        <TableCell className="font-medium">{patient.name}</TableCell>
+                        <TableCell className="text-gray-500">{patient.age}</TableCell>
+                        <TableCell>
+                          <Badge variant="secondary" className="bg-blue-50 text-blue-700">
+                            {patient.gender}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-gray-500">{patient.phone}</TableCell>
+                        <TableCell className="hidden md:table-cell text-gray-500">{patient.email}</TableCell>
+                        <TableCell className="hidden sm:table-cell text-gray-500">
+                          {format(new Date(patient.createdAt), 'MMM dd, yyyy')}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               </Table>
             </div>
