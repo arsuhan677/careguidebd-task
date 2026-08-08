@@ -120,7 +120,8 @@ export function DoctorFormDialog({ isOpen, onClose, doctor }: DoctorFormDialogPr
             <div className="space-y-2">
               <Label htmlFor="specialization">Specialization</Label>
               <Select 
-                onValueChange={(val) => setValue('specialization', val, { shouldValidate: true })}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onValueChange={(val: any) => setValue('specialization', val, { shouldValidate: true })}
                 defaultValue={doctor?.specialization ?? ""}
               >
                 <SelectTrigger>
@@ -140,7 +141,8 @@ export function DoctorFormDialog({ isOpen, onClose, doctor }: DoctorFormDialogPr
             <div className="space-y-2">
               <Label htmlFor="hospital">Hospital</Label>
               <Select 
-                onValueChange={(val) => setValue('hospital', val, { shouldValidate: true })}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onValueChange={(val: any) => setValue('hospital', val, { shouldValidate: true })}
                 defaultValue={doctor?.hospital ?? ""}
               >
                 <SelectTrigger>

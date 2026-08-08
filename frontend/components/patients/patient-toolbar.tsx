@@ -1,0 +1,162 @@
+'use client';
+
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Search, Plus, X } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useGetDoctors } from '@/hooks/useDoctors';
+
+// Debounce hook
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debouncedValue;
+}
+
+interface PatientToolbarProps {
+  onAddPatient: () => void;
+}
+
+export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const currentSearch = searchParams.get('search') || '';
+  const currentGender = searchParams.get('gender') || 'all';
+  const currentDoctor = searchParams.get('doctor') || 'all';
+  const currentCreatedFrom = searchParams.get('createdFrom') || '';
+  const currentCreatedTo = searchParams.get('createdTo') || '';
+
+  const [search, setSearch] = useState(currentSearch);
+  const debouncedSearch = useDebounce(search, 500);
+
+  // Fetch doctors for filter
+  const { data: doctorsRes } = useGetDoctors({ limit: 100 });
+  const doctors = doctorsRes?.data || [];
+
+  const updateFilters = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value && value !== 'all') {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    params.set('page', '1'); // Reset to page 1 on filter change
+    router.push(`/patients?${params.toString()}`);
+  };
+
+  // Sync debounced search to URL
+  useEffect(() => {
+    if (debouncedSearch !== currentSearch) {
+      updateFilters('search', debouncedSearch);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch, currentSearch]);
+
+  const clearFilters = () => {
+    setSearch('');
+    router.push('/patients');
+  };
+
+  const hasActiveFilters = 
+    currentSearch !== '' || 
+    currentGender !== 'all' || 
+    currentDoctor !== 'all' || 
+    currentCreatedFrom !== '' || 
+    currentCreatedTo !== '';
+
+  const handleDateChange = (key: 'createdFrom' | 'createdTo', value: string) => {
+    updateFilters(key, value);
+  };
+
+  return (
+    <div className="flex flex-col gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-1 w-full flex-col sm:flex-row gap-2">
+          <div className="relative w-full sm:w-[300px]">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+            <Input
+              placeholder="Search patients..."
+              className="pl-9 bg-white"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          
+          <Select 
+            value={currentGender || "all"} 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onValueChange={(val: any) => updateFilters('gender', val)}
+          >
+            <SelectTrigger className="w-full sm:w-[150px] bg-white">
+              <SelectValue placeholder="Gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Genders</SelectItem>
+              <SelectItem value="Male">Male</SelectItem>
+              <SelectItem value="Female">Female</SelectItem>
+              <SelectItem value="Other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select 
+            value={currentDoctor || "all"} 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onValueChange={(val: any) => updateFilters('doctor', val)}
+          >
+            <SelectTrigger className="w-full sm:w-[180px] bg-white">
+              <SelectValue placeholder="Doctor" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Doctors</SelectItem>
+              {doctors.map(doc => (
+                <SelectItem key={doc._id} value={doc._id}>{doc.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <Button onClick={onAddPatient} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
+          <Plus className="mr-2 h-4 w-4" /> Add Patient
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="flex items-center space-x-2">
+          <span className="text-sm text-gray-500 font-medium">Date:</span>
+          <Input 
+            type="date"
+            className="w-[140px] bg-white h-9 text-sm"
+            value={currentCreatedFrom}
+            onChange={(e) => handleDateChange('createdFrom', e.target.value)}
+            max={currentCreatedTo || undefined}
+          />
+          <span className="text-sm text-gray-500">-</span>
+          <Input 
+            type="date"
+            className="w-[140px] bg-white h-9 text-sm"
+            value={currentCreatedTo}
+            onChange={(e) => handleDateChange('createdTo', e.target.value)}
+            min={currentCreatedFrom || undefined}
+          />
+        </div>
+
+        {hasActiveFilters && (
+          <Button 
+            variant="ghost" 
+            onClick={clearFilters}
+            className="h-9 px-3 text-gray-500 hover:text-gray-900"
+          >
+            <X className="mr-2 h-4 w-4" /> Clear Filters
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}

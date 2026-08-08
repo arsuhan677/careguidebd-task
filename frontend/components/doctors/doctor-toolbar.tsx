@@ -75,7 +75,8 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
         
           <Select 
             value={currentSpecialization || "all"} 
-            onValueChange={(val) => updateFilters('specialization', val)}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onValueChange={(val: any) => updateFilters('specialization', val)}
           >
           <SelectTrigger className="w-full sm:w-[180px] bg-white">
             <SelectValue placeholder="Specialization" />
@@ -92,7 +93,8 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
 
           <Select 
             value={currentHospital || "all"} 
-            onValueChange={(val) => updateFilters('hospital', val)}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onValueChange={(val: any) => updateFilters('hospital', val)}
           >
           <SelectTrigger className="w-full sm:w-[180px] bg-white">
             <SelectValue placeholder="Hospital" />
