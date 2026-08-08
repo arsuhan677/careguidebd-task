@@ -34,7 +34,7 @@ export default function PatientsPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  
+
   // Selected patient for edit/view/delete
   const [selectedPatient, setSelectedPatient] = useState<IPatient | null>(null);
 
@@ -59,14 +59,14 @@ export default function PatientsPage() {
   };
 
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
+    <div className="flex-1 space-y-4 p-3 md:p-2 pt-6">
       <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900">Patients</h2>
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900">Patients</h2>
       </div>
 
       <div className="mt-4">
         <PatientToolbar onAddPatient={handleAdd} />
-        
+
         {isLoading ? (
           <div className="space-y-3 bg-white p-6 rounded-xl border">
             <Skeleton className="h-8 w-full" />
@@ -81,8 +81,8 @@ export default function PatientsPage() {
           </div>
         ) : response ? (
           <>
-            <PatientTable 
-              data={response.data} 
+            <PatientTable
+              data={response.data}
               onView={handleView}
               onEdit={handleEdit}
               onDelete={handleDelete}
@@ -94,22 +94,22 @@ export default function PatientsPage() {
         ) : null}
       </div>
 
-      <PatientFormDialog 
-        isOpen={isFormOpen} 
-        onClose={() => setIsFormOpen(false)} 
-        patient={selectedPatient} 
+      <PatientFormDialog
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        patient={selectedPatient}
       />
 
-      <PatientViewDialog 
-        isOpen={isViewOpen} 
-        onClose={() => setIsViewOpen(false)} 
-        patient={selectedPatient} 
+      <PatientViewDialog
+        isOpen={isViewOpen}
+        onClose={() => setIsViewOpen(false)}
+        patient={selectedPatient}
       />
 
-      <PatientDeleteAlert 
-        isOpen={isDeleteOpen} 
-        onClose={() => setIsDeleteOpen(false)} 
-        patient={selectedPatient} 
+      <PatientDeleteAlert
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+        patient={selectedPatient}
       />
     </div>
   );

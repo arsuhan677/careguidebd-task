@@ -19,10 +19,10 @@ export const useGetDoctors = (query: IDoctorQuery) => {
           params.append(key, String(value));
         }
       });
-      const res = await api.get(`/doctors?${params.toString()}`);
+      const res: any = await api.get(`/doctors?${params.toString()}`);
       return {
-        data: res.data.data,
-        pagination: res.data.pagination,
+        data: res.data,
+        pagination: res.pagination,
       };
     },
   });
@@ -32,8 +32,8 @@ export const useGetDoctor = (id: string | null) => {
   return useQuery({
     queryKey: ['doctors', id],
     queryFn: async (): Promise<IDoctor> => {
-      const res = await api.get(`/doctors/${id}`);
-      return res.data.data;
+      const res: any = await api.get(`/doctors/${id}`);
+      return res.data;
     },
     enabled: !!id,
   });
@@ -44,8 +44,8 @@ export const useCreateDoctor = () => {
   
   return useMutation({
     mutationFn: async (payload: CreateDoctorPayload): Promise<IDoctor> => {
-      const res = await api.post('/doctors', payload);
-      return res.data.data;
+      const res: any = await api.post('/doctors', payload);
+      return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['doctors'] });
@@ -59,8 +59,8 @@ export const useUpdateDoctor = () => {
   
   return useMutation({
     mutationFn: async ({ id, payload }: { id: string; payload: UpdateDoctorPayload }): Promise<IDoctor> => {
-      const res = await api.patch(`/doctors/${id}`, payload);
-      return res.data.data;
+      const res: any = await api.patch(`/doctors/${id}`, payload);
+      return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['doctors'] });

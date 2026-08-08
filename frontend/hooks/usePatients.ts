@@ -20,8 +20,11 @@ export const useGetPatients = (query: IPatientQuery) => {
         }
       });
       
-      const res = await api.get(`/patients?${params.toString()}`);
-      return res.data;
+      const res: any = await api.get(`/patients?${params.toString()}`);
+      return {
+        data: res.data,
+        pagination: res.pagination,
+      };
     },
   });
 };
@@ -30,8 +33,8 @@ export const useGetPatient = (id: string) => {
   return useQuery({
     queryKey: ['patients', id],
     queryFn: async (): Promise<IPatient> => {
-      const res = await api.get(`/patients/${id}`);
-      return res.data.data;
+      const res: any = await api.get(`/patients/${id}`);
+      return res.data;
     },
     enabled: !!id,
   });
@@ -42,8 +45,8 @@ export const useCreatePatient = () => {
   
   return useMutation({
     mutationFn: async (payload: CreatePatientPayload) => {
-      const res = await api.post('/patients', payload);
-      return res.data.data;
+      const res: any = await api.post('/patients', payload);
+      return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['patients'] });
@@ -57,8 +60,8 @@ export const useUpdatePatient = () => {
   
   return useMutation({
     mutationFn: async ({ id, payload }: { id: string; payload: UpdatePatientPayload }) => {
-      const res = await api.patch(`/patients/${id}`, payload);
-      return res.data.data;
+      const res: any = await api.patch(`/patients/${id}`, payload);
+      return res.data;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['patients'] });
@@ -73,7 +76,7 @@ export const useDeletePatient = () => {
   
   return useMutation({
     mutationFn: async (id: string) => {
-      const res = await api.delete(`/patients/${id}`);
+      const res: any = await api.delete(`/patients/${id}`);
       return res.data;
     },
     onSuccess: () => {
