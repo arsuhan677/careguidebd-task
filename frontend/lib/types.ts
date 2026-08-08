@@ -1,4 +1,4 @@
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
   data?: T;
@@ -10,14 +10,14 @@ export interface ApiResponse<T = any> {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
   };
-  errors?: any;
+  errors?: unknown;
 }
 
 export class ApiError extends Error {
   public status: number;
-  public data: any;
+  public data: unknown;
 
-  constructor(message: string, status: number, data?: any) {
+  constructor(message: string, status: number, data?: unknown) {
     super(message);
     this.name = 'ApiError';
     this.status = status;

@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
-import { ApiResponse } from '@/lib/types';
 import { useRouter } from 'next/navigation';
 
 export interface User {
@@ -24,8 +23,10 @@ export const useAuth = () => {
       try {
         const res = await api.get('/auth/me');
         return res.data;
-      } catch (e: any) {
-        if (e.status === 401) return null;
+      } catch (e: unknown) {
+        if (typeof e === 'object' && e !== null && 'status' in e) {
+          if ((e as Record<string, unknown>).status === 401) return null;
+        }
         throw e;
       }
     },
@@ -34,7 +35,7 @@ export const useAuth = () => {
   });
 
   const loginMutation = useMutation({
-    mutationFn: async (credentials: any) => {
+    mutationFn: async (credentials: Record<string, unknown>) => {
       const res = await api.post('/auth/login', credentials);
       return res.data;
     },
@@ -45,7 +46,7 @@ export const useAuth = () => {
   });
 
   const registerMutation = useMutation({
-    mutationFn: async (userData: any) => {
+    mutationFn: async (userData: Record<string, unknown>) => {
       const res = await api.post('/auth/register', userData);
       return res.data;
     },

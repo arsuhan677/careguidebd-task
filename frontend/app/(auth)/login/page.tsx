@@ -25,8 +25,8 @@ export default function LoginPage() {
 
     try {
       await login({ email, password });
-    } catch (err: any) {
-      setError(err.message || 'Login failed');
+    } catch (err) {
+      setError((err as Error).message || 'Login failed');
     }
   };
 

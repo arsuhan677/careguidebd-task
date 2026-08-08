@@ -31,8 +31,8 @@ export default function RegisterPage() {
 
     try {
       await register({ name, email, password });
-    } catch (err: any) {
-      setError(err.message || 'Registration failed');
+    } catch (err) {
+      setError((err as Error).message || 'Registration failed');
     }
   };
 
