@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './modules/auth/auth.routes';
 import doctorRoutes from './modules/doctor/doctor.routes';
+import patientRoutes from './modules/patient/patient.routes';
 import { AppError } from './modules/auth/auth.utils';
 
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/doctors', doctorRoutes);
+app.use('/api/patients', patientRoutes);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
