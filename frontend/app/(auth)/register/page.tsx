@@ -58,9 +58,9 @@ export default function RegisterPage() {
               </div>
             )}
 
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+            <div className="space-y-5">
+              <div className="space-y-3">
+                <Label htmlFor="name" className="text-gray-700">Full Name</Label>
                 <Input
                   id="name"
                   type="text"
@@ -68,10 +68,11 @@ export default function RegisterPage() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="John Doe"
                   disabled={isRegistering}
+                  className="h-12 py-3"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+              <div className="space-y-3">
+                <Label htmlFor="email" className="text-gray-700">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -79,21 +80,23 @@ export default function RegisterPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="m@example.com"
                   disabled={isRegistering}
+                  className="h-12 py-3"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+              <div className="space-y-3">
+                <Label htmlFor="password" className="text-gray-700">Password</Label>
                 <Input
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isRegistering}
+                  className="h-12 py-3"
                 />
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4 pt-2 pb-8">
+          <CardFooter className="flex flex-col space-y-4 pt-6 pb-8">
             <Button type="submit" className="w-full text-base py-6 cursor-pointer" disabled={isRegistering}>
               {isRegistering ? 'Creating account...' : 'Create account'}
             </Button>
