@@ -30,6 +30,7 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
 
   const currentSearch = searchParams.get('search') || '';
   const currentGender = searchParams.get('gender') || 'all';
+  const currentCondition = searchParams.get('condition') || 'all';
   const currentDoctor = searchParams.get('doctor') || 'all';
   const currentCreatedFrom = searchParams.get('createdFrom') || '';
   const currentCreatedTo = searchParams.get('createdTo') || '';
@@ -40,6 +41,8 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
   // Fetch doctors for filter
   const { data: doctorsRes } = useGetDoctors({ limit: 100 });
   const doctors = doctorsRes?.data || [];
+
+  const commonConditions = ['Fever', 'Diabetes', 'Heart Disease', 'Hypertension', 'Asthma', 'Other'];
 
   const updateFilters = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -68,6 +71,7 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
   const hasActiveFilters = 
     currentSearch !== '' || 
     currentGender !== 'all' || 
+    currentCondition !== 'all' || 
     currentDoctor !== 'all' || 
     currentCreatedFrom !== '' || 
     currentCreatedTo !== '';
@@ -107,8 +111,22 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
           </Select>
 
           <Select 
+            value={currentCondition || "all"} 
+            onValueChange={(val: any) => updateFilters('condition', val)}
+          >
+            <SelectTrigger className="w-full sm:w-[150px] bg-white">
+              <SelectValue placeholder="Condition" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Conditions</SelectItem>
+              {commonConditions.map(cond => (
+                <SelectItem key={cond} value={cond}>{cond}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select 
             value={currentDoctor || "all"} 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onValueChange={(val: any) => updateFilters('doctor', val)}
           >
             <SelectTrigger className="w-full sm:w-[180px] bg-white">

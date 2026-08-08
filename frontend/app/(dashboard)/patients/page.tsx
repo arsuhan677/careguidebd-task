@@ -22,6 +22,7 @@ export default function PatientsPage() {
     search: searchParams.get('search') || undefined,
     gender: searchParams.get('gender') || undefined,
     doctor: searchParams.get('doctor') || undefined,
+    condition: searchParams.get('condition') || undefined,
     createdFrom: searchParams.get('createdFrom') || undefined,
     createdTo: searchParams.get('createdTo') || undefined,
     sortBy: (searchParams.get('sortBy') as 'createdAt' | 'name' | 'age' | 'gender') || 'createdAt',

@@ -6,7 +6,7 @@ export const createPatient = async (patientData: IPatient) => {
 };
 
 export const getAllPatients = async (queryOptions: IPatientQuery = {}) => {
-  const { search, doctor, gender, createdFrom, createdTo, sortBy = 'createdAt', sortOrder = 'desc' } = queryOptions;
+  const { search, doctor, condition, gender, createdFrom, createdTo, sortBy = 'createdAt', sortOrder = 'desc' } = queryOptions;
   const page = Number(queryOptions.page) || 1;
   const limit = Number(queryOptions.limit) || 10;
   
@@ -27,6 +27,10 @@ export const getAllPatients = async (queryOptions: IPatientQuery = {}) => {
   
   if (gender) {
     filter.gender = gender;
+  }
+
+  if (condition) {
+    filter.condition = condition;
   }
 
   if (createdFrom || createdTo) {

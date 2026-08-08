@@ -50,6 +50,9 @@ export function PatientViewDialog({ isOpen, onClose, patient }: PatientViewDialo
               <Badge variant="outline" className="text-gray-600">
                 {patient.age} Years Old
               </Badge>
+              <Badge variant="outline" className="text-gray-600 bg-gray-50 border-gray-200">
+                Condition: {patient.condition}
+              </Badge>
             </div>
           </div>
 

@@ -8,6 +8,7 @@ export interface IPatient {
   phone: string;
   email: string;
   doctor: Types.ObjectId | string;
+  condition: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -16,6 +17,7 @@ export interface IPatientQuery {
   search?: string;
   doctor?: string;
   gender?: string;
+  condition?: string;
   createdFrom?: string;
   createdTo?: string;
   page?: string | number;

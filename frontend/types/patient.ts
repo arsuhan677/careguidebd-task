@@ -9,6 +9,7 @@ export interface IPatient {
   phone: string;
   email: string;
   doctor: IDoctor | string;
+  condition: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -19,6 +20,7 @@ export interface IPatientQuery {
   search?: string;
   doctor?: string;
   gender?: string;
+  condition?: string;
   createdFrom?: string;
   createdTo?: string;
   sortBy?: 'createdAt' | 'name' | 'age' | 'gender';
@@ -37,6 +39,7 @@ export interface CreatePatientPayload {
   phone: string;
   email: string;
   doctor: string;
+  condition: string;
 }
 
 export type UpdatePatientPayload = Partial<CreatePatientPayload>;

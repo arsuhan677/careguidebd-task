@@ -35,6 +35,11 @@ const patientSchema = new mongoose.Schema<IPatient>(
       ref: 'Doctor',
       required: true,
     },
+    condition: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   {
     timestamps: true,
@@ -43,6 +48,7 @@ const patientSchema = new mongoose.Schema<IPatient>(
 
 patientSchema.index({ doctor: 1 });
 patientSchema.index({ gender: 1 });
+patientSchema.index({ condition: 1 });
 patientSchema.index({ createdAt: -1 });
 
 export const Patient = (mongoose.models.Patient as mongoose.Model<IPatient>) || mongoose.model<IPatient>('Patient', patientSchema);

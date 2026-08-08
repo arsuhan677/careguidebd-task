@@ -97,6 +97,7 @@ export function PatientTable({ data, onEdit, onDelete, onView }: PatientTablePro
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </div>
               </TableHead>
+              <TableHead className="font-semibold hidden sm:table-cell">Condition</TableHead>
               <TableHead className="font-semibold hidden lg:table-cell">Phone</TableHead>
               <TableHead className="font-semibold hidden xl:table-cell">Email</TableHead>
               <TableHead className="font-semibold hidden md:table-cell">Doctor</TableHead>
@@ -130,6 +131,9 @@ export function PatientTable({ data, onEdit, onDelete, onView }: PatientTablePro
                   <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-50">
                     {patient.gender}
                   </Badge>
+                </TableCell>
+                <TableCell className="hidden sm:table-cell text-gray-700">
+                  <Badge variant="outline">{patient.condition}</Badge>
                 </TableCell>
                 <TableCell className="hidden lg:table-cell text-gray-500">
                   {patient.phone}
