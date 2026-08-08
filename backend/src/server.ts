@@ -1,0 +1,14 @@
+// import app = require('./app'); 
+
+// import connectDB = require('./config/database');
+
+import app from './app';
+import connectDB from './config/database';
+
+const PORT = process.env.PORT || 5000;
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log('Server started successfully.');
+  });
+});
