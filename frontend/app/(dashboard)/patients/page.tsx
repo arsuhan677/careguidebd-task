@@ -60,12 +60,13 @@ export default function PatientsPage() {
   };
 
   return (
-    <div className="flex-1 space-y-4 p-3 md:p-2 pt-6">
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">Patients</h2>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Patients</h1>
+        <p className="text-sm text-gray-500">Manage patient records and view details.</p>
       </div>
 
-      <div className="mt-4">
+      <div>
         <PatientToolbar onAddPatient={handleAdd} />
 
         {isLoading ? (

@@ -62,7 +62,7 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-5xl w-[95vw] md:w-[90vw] lg:w-[85vw] max-h-[90vh] overflow-hidden flex flex-col p-0">
+      <DialogContent className="max-w-7xl w-[95vw] md:w-[95vw] lg:w-[90vw] max-h-[90vh] overflow-hidden flex flex-col p-0">
         <DialogHeader className="px-6 pt-6 pb-4 border-b bg-gray-50/50">
           <DialogTitle className="text-xl font-semibold text-gray-900">
             Patients of {doctor.name}

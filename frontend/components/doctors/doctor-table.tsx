@@ -46,7 +46,7 @@ export function DoctorTable({ data, onView, onEdit, onDelete, onViewPatients }: 
               <TableHead className="font-semibold text-gray-900">Specialization</TableHead>
               <TableHead className="font-semibold text-gray-900 hidden md:table-cell">Hospital</TableHead>
               <TableHead className="font-semibold text-gray-900 hidden lg:table-cell">Phone</TableHead>
-              <TableHead className="font-semibold text-gray-900">Actions</TableHead>
+              <TableHead className="w-[100px] font-semibold text-gray-900 text-center align-middle">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -66,37 +66,39 @@ export function DoctorTable({ data, onView, onEdit, onDelete, onViewPatients }: 
                 <TableCell className="hidden lg:table-cell text-gray-500">
                   {doctor.phone}
                 </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="h-8 w-8 p-0 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
-                      <span className="sr-only">Open menu</span>
-                      <MoreHorizontal className="h-4 w-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      {onViewPatients && (
-                        <DropdownMenuItem onClick={() => onViewPatients(doctor)} className="cursor-pointer">
-                          <Users className="mr-2 h-4 w-4 text-green-600" />
-                          View Patients
+                <TableCell className="text-center align-middle">
+                  <div className="flex justify-center items-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="h-8 w-8 p-0 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        {onViewPatients && (
+                          <DropdownMenuItem onClick={() => onViewPatients(doctor)} className="cursor-pointer">
+                            <Users className="mr-2 h-4 w-4 text-green-600" />
+                            View Patients
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuItem onClick={() => onView(doctor)} className="cursor-pointer">
+                          <Eye className="mr-2 h-4 w-4 text-gray-500" />
+                          View
                         </DropdownMenuItem>
-                      )}
-                      <DropdownMenuItem onClick={() => onView(doctor)} className="cursor-pointer">
-                        <Eye className="mr-2 h-4 w-4 text-gray-500" />
-                        View
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => onEdit(doctor)} className="cursor-pointer">
-                        <Edit className="mr-2 h-4 w-4 text-blue-500" />
-                        Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem 
-                        onClick={() => onDelete(doctor)} 
-                        className="cursor-pointer text-red-600 focus:text-red-700 focus:bg-red-50"
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                        <DropdownMenuItem onClick={() => onEdit(doctor)} className="cursor-pointer">
+                          <Edit className="mr-2 h-4 w-4 text-blue-500" />
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem 
+                          onClick={() => onDelete(doctor)} 
+                          className="cursor-pointer text-red-600 focus:text-red-700 focus:bg-red-50"
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

@@ -82,8 +82,8 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
 
   return (
     <div className="flex flex-col gap-4 mb-6">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex flex-1 w-full flex-col sm:flex-row gap-2">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div className="flex flex-1 w-full flex-col sm:flex-row flex-wrap gap-2">
           <div className="relative w-full sm:w-[300px]">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <Input
@@ -146,19 +146,19 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
           <span className="text-sm text-gray-500 font-medium">Date:</span>
           <Input 
             type="date"
-            className="w-[140px] bg-white h-9 text-sm"
+            className="w-full sm:w-[140px] bg-white h-9 text-sm"
             value={currentCreatedFrom}
             onChange={(e) => handleDateChange('createdFrom', e.target.value)}
             max={currentCreatedTo || undefined}
           />
-          <span className="text-sm text-gray-500">-</span>
+          <span className="hidden sm:inline text-sm text-gray-500">-</span>
           <Input 
             type="date"
-            className="w-[140px] bg-white h-9 text-sm"
+            className="w-full sm:w-[140px] bg-white h-9 text-sm"
             value={currentCreatedTo}
             onChange={(e) => handleDateChange('createdTo', e.target.value)}
             min={currentCreatedFrom || undefined}

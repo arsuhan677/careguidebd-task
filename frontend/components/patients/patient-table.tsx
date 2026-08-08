@@ -110,7 +110,7 @@ export function PatientTable({ data, onEdit, onDelete, onView }: PatientTablePro
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </div>
               </TableHead>
-              <TableHead className="w-[80px]"></TableHead>
+              <TableHead className="w-[100px] font-semibold text-center align-middle">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -147,31 +147,33 @@ export function PatientTable({ data, onEdit, onDelete, onView }: PatientTablePro
                 <TableCell className="hidden sm:table-cell text-gray-500 whitespace-nowrap">
                   {format(new Date(patient.createdAt), 'MMM dd, yyyy')}
                 </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="h-8 w-8 p-0 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
-                      <span className="sr-only">Open menu</span>
-                      <MoreHorizontal className="h-4 w-4 text-gray-500" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-[160px]">
-                      <DropdownMenuItem onClick={() => onView(patient)} className="cursor-pointer py-2">
-                        <Eye className="mr-2 h-4 w-4 text-gray-500" />
-                        View Details
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => onEdit(patient)} className="cursor-pointer py-2">
-                        <Edit className="mr-2 h-4 w-4 text-blue-500" />
-                        Edit Patient
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem 
-                        onClick={() => onDelete(patient)} 
-                        className="cursor-pointer text-red-600 focus:text-red-600 py-2"
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                <TableCell className="text-center align-middle">
+                  <div className="flex justify-center items-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="h-8 w-8 p-0 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4 text-gray-500" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-[160px]">
+                        <DropdownMenuItem onClick={() => onView(patient)} className="cursor-pointer py-2">
+                          <Eye className="mr-2 h-4 w-4 text-gray-500" />
+                          View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onEdit(patient)} className="cursor-pointer py-2">
+                          <Edit className="mr-2 h-4 w-4 text-blue-500" />
+                          Edit Patient
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem 
+                          onClick={() => onDelete(patient)} 
+                          className="cursor-pointer text-red-600 focus:text-red-600 py-2"
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
