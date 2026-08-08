@@ -16,16 +16,17 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, Eye, Edit, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Eye, Edit, Trash2, Users } from 'lucide-react';
 
 interface DoctorTableProps {
   data: IDoctor[];
   onView: (doctor: IDoctor) => void;
   onEdit: (doctor: IDoctor) => void;
   onDelete: (doctor: IDoctor) => void;
+  onViewPatients?: (doctor: IDoctor) => void;
 }
 
-export function DoctorTable({ data, onView, onEdit, onDelete }: DoctorTableProps) {
+export function DoctorTable({ data, onView, onEdit, onDelete, onViewPatients }: DoctorTableProps) {
   if (!data || data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center p-12 bg-white rounded-xl shadow-sm border border-dashed text-gray-500">
@@ -72,6 +73,12 @@ export function DoctorTable({ data, onView, onEdit, onDelete }: DoctorTableProps
                       <MoreHorizontal className="h-4 w-4" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
+                      {onViewPatients && (
+                        <DropdownMenuItem onClick={() => onViewPatients(doctor)} className="cursor-pointer">
+                          <Users className="mr-2 h-4 w-4 text-green-600" />
+                          View Patients
+                        </DropdownMenuItem>
+                      )}
                       <DropdownMenuItem onClick={() => onView(doctor)} className="cursor-pointer">
                         <Eye className="mr-2 h-4 w-4 text-gray-500" />
                         View

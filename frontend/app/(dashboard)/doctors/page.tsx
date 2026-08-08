@@ -10,6 +10,7 @@ import { DoctorPagination } from '@/components/doctors/doctor-pagination';
 import { DoctorFormDialog } from '@/components/doctors/doctor-form-dialog';
 import { DoctorViewDialog } from '@/components/doctors/doctor-view-dialog';
 import { DoctorDeleteAlert } from '@/components/doctors/doctor-delete-alert';
+import { DoctorPatientsDialog } from '@/components/doctors/doctor-patients-dialog';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DoctorsPage() {
@@ -32,6 +33,7 @@ export default function DoctorsPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isViewPatientsOpen, setIsViewPatientsOpen] = useState(false);
 
   // Selected doctor for edit/view/delete
   const [selectedDoctor, setSelectedDoctor] = useState<IDoctor | null>(null);
@@ -54,6 +56,11 @@ export default function DoctorsPage() {
   const handleDelete = (doctor: IDoctor) => {
     setSelectedDoctor(doctor);
     setIsDeleteOpen(true);
+  };
+
+  const handleViewPatients = (doctor: IDoctor) => {
+    setSelectedDoctor(doctor);
+    setIsViewPatientsOpen(true);
   };
 
   return (
@@ -84,6 +91,7 @@ export default function DoctorsPage() {
               onView={handleView}
               onEdit={handleEdit}
               onDelete={handleDelete}
+              onViewPatients={handleViewPatients}
             />
             {response.pagination && response.pagination.totalPages > 1 && (
               <DoctorPagination pagination={response.pagination} />
@@ -107,6 +115,12 @@ export default function DoctorsPage() {
       <DoctorDeleteAlert
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}
+        doctor={selectedDoctor}
+      />
+
+      <DoctorPatientsDialog
+        isOpen={isViewPatientsOpen}
+        onClose={() => setIsViewPatientsOpen(false)}
         doctor={selectedDoctor}
       />
     </div>
