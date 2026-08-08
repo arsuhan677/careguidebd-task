@@ -8,6 +8,11 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.headers.cookie) {
+    const match = req.headers.cookie.match(/(?:^| )accessToken=([^;]+)/);
+    if (match) {
+      token = match[1];
+    }
   }
 
   if (!token) {

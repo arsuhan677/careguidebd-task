@@ -24,6 +24,7 @@ const validate = (schema: any) => (req: Request, res: Response, next: NextFuncti
 
 router.post('/register', validate(registerSchema), authController.register);
 router.post('/login', validate(loginSchema), authController.login);
+router.post('/logout', authController.logout);
 router.get('/me', protect, authController.getMe);
 
 export default router;
