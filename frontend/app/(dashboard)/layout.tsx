@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50/50">
+    <div className="fixed inset-0 flex bg-gray-50/50">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div

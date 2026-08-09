@@ -99,9 +99,10 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
         </Button>
       </div>
 
-      <div className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-between gap-3">
+        <div className="grid grid-cols-2 sm:flex sm:flex-row items-center gap-3 w-full sm:w-auto">
         <Select 
-          value={currentGender || "all"} 
+          value={currentGender === 'all' ? undefined : currentGender} 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onValueChange={(val: any) => updateFilters('gender', val)}
         >
@@ -109,7 +110,6 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
             <SelectValue placeholder="Gender" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Genders</SelectItem>
             <SelectItem value="Male">Male</SelectItem>
             <SelectItem value="Female">Female</SelectItem>
             <SelectItem value="Other">Other</SelectItem>
@@ -117,14 +117,13 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
         </Select>
 
         <Select 
-          value={currentCondition || "all"} 
+          value={currentCondition === 'all' ? undefined : currentCondition} 
           onValueChange={(val: any) => updateFilters('condition', val)}
         >
           <SelectTrigger className="w-full sm:w-[150px] bg-white h-10 rounded-md border-gray-200">
             <SelectValue placeholder="Condition" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Conditions</SelectItem>
             {commonConditions.map(cond => (
               <SelectItem key={cond} value={cond}>{cond}</SelectItem>
             ))}
@@ -132,21 +131,31 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
         </Select>
 
         <Select 
-          value={currentDoctor || "all"} 
+          value={currentDoctor === 'all' ? undefined : currentDoctor} 
           onValueChange={(val: any) => updateFilters('doctor', val)}
         >
           <SelectTrigger className="w-full sm:w-[180px] bg-white h-10 rounded-md border-gray-200 col-span-2 sm:col-span-1">
             <SelectValue placeholder="Doctor" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Doctors</SelectItem>
             {doctors.map(doc => (
               <SelectItem key={doc._id} value={doc._id}>{doc.name}</SelectItem>
             ))}
           </SelectContent>
         </Select>
+        {hasActiveFilters && (
+          <Button 
+            variant="ghost" 
+            onClick={clearFilters}
+            className="col-span-2 sm:col-span-1 h-10 px-3 text-gray-500 hover:text-gray-900 w-full sm:w-auto"
+          >
+            <X className="mr-2 h-4 w-4" />
+            Clear Filters
+          </Button>
+        )}
+        </div>
 
-        <div className="grid grid-cols-2 sm:flex sm:flex-row items-center gap-2 col-span-2 sm:col-span-1">
+        <div className="flex flex-row items-center gap-2 w-full sm:w-auto">
           <Input 
             type="date"
             className="w-full sm:w-[140px] bg-white h-10 rounded-md border-gray-200"
@@ -154,7 +163,7 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
             onChange={(e) => handleDateChange('createdFrom', e.target.value)}
             max={currentCreatedTo || undefined}
           />
-          <span className="hidden sm:inline text-gray-400 font-medium px-1">-</span>
+          <span className="hidden sm:inline text-gray-400 font-medium">-</span>
           <Input 
             type="date"
             className="w-full sm:w-[140px] bg-white h-10 rounded-md border-gray-200"
@@ -163,17 +172,6 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
             min={currentCreatedFrom || undefined}
           />
         </div>
-
-        {hasActiveFilters && (
-          <Button 
-            variant="ghost" 
-            onClick={clearFilters}
-            className="col-span-2 sm:col-span-1 h-10 px-3 text-gray-500 hover:text-gray-900 w-full sm:w-auto mt-1 sm:mt-0"
-          >
-            <X className="mr-2 h-4 w-4" />
-            Clear Filters
-          </Button>
-        )}
       </div>
     </div>
   );

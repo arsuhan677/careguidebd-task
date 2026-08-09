@@ -90,9 +90,10 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
         </Button>
       </div>
 
-      <div className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-between gap-3">
+        <div className="grid grid-cols-2 sm:flex sm:flex-row items-center gap-3 w-full sm:w-auto">
         <Select 
-          value={currentSpecialization || "all"} 
+          value={currentSpecialization === 'all' ? undefined : currentSpecialization} 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onValueChange={(val: any) => updateFilters('specialization', val)}
         >
@@ -100,7 +101,6 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
             <SelectValue placeholder="Specialization" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Specializations</SelectItem>
             <SelectItem value="Cardiology">Cardiology</SelectItem>
             <SelectItem value="Neurology">Neurology</SelectItem>
             <SelectItem value="Orthopedics">Orthopedics</SelectItem>
@@ -110,7 +110,7 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
         </Select>
 
         <Select 
-          value={currentHospital || "all"} 
+          value={currentHospital === 'all' ? undefined : currentHospital} 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onValueChange={(val: any) => updateFilters('hospital', val)}
         >
@@ -118,7 +118,6 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
             <SelectValue placeholder="Hospital" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Hospitals</SelectItem>
             <SelectItem value="Dhaka Medical College">Dhaka Medical College</SelectItem>
             <SelectItem value="Square Hospital">Square Hospital</SelectItem>
             <SelectItem value="Apollo Hospital">Apollo Hospital</SelectItem>
@@ -126,8 +125,19 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
             <SelectItem value="Evercare Hospital">Evercare Hospital</SelectItem>
           </SelectContent>
         </Select>
+        {hasActiveFilters && (
+          <Button 
+            variant="ghost" 
+            onClick={clearFilters}
+            className="col-span-2 sm:col-span-1 h-10 px-3 text-gray-500 hover:text-gray-900 w-full sm:w-auto"
+          >
+            <X className="mr-2 h-4 w-4" />
+            Clear Filters
+          </Button>
+        )}
+        </div>
 
-        <div className="grid grid-cols-2 sm:flex sm:flex-row items-center gap-2 col-span-2 sm:col-span-1">
+        <div className="flex flex-row items-center gap-2 w-full sm:w-auto">
           <Input 
             type="date"
             className="w-full sm:w-[140px] bg-white h-10 rounded-md border-gray-200"
@@ -135,7 +145,7 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
             onChange={(e) => handleDateChange('createdFrom', e.target.value)}
             max={currentCreatedTo || undefined}
           />
-          <span className="hidden sm:inline text-gray-400 font-medium px-1">-</span>
+          <span className="hidden sm:inline text-gray-400 font-medium">-</span>
           <Input 
             type="date"
             className="w-full sm:w-[140px] bg-white h-10 rounded-md border-gray-200"
@@ -144,17 +154,6 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
             min={currentCreatedFrom || undefined}
           />
         </div>
-
-        {hasActiveFilters && (
-          <Button 
-            variant="ghost" 
-            onClick={clearFilters}
-            className="col-span-2 sm:col-span-1 h-10 px-3 text-gray-500 hover:text-gray-900 w-full sm:w-auto mt-1 sm:mt-0"
-          >
-            <X className="mr-2 h-4 w-4" />
-            Clear Filters
-          </Button>
-        )}
       </div>
     </div>
   );
