@@ -34,7 +34,7 @@ export function PatientViewDialog({ isOpen, onClose, patient }: PatientViewDialo
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px] w-[calc(100%-2rem)] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold flex items-center gap-2">
             Patient Details
@@ -85,7 +85,7 @@ export function PatientViewDialog({ isOpen, onClose, patient }: PatientViewDialo
                 <User className="mr-2 h-4 w-4 text-gray-400" />
                 System Information
               </h4>
-              <div className="grid grid-cols-2 gap-4 pl-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pl-6">
                 <div>
                   <span className="block text-xs text-gray-500 mb-1">Added On</span>
                   <div className="flex items-center text-sm text-gray-900">
@@ -129,7 +129,7 @@ export function PatientViewDialog({ isOpen, onClose, patient }: PatientViewDialo
 
             <div className="space-y-4">
               <div className="border-b pb-2"><Skeleton className="h-5 w-40" /></div>
-              <div className="grid grid-cols-2 gap-4 pl-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pl-6">
                 <div>
                   <Skeleton className="h-3 w-20 mb-1" />
                   <Skeleton className="h-4 w-28" />

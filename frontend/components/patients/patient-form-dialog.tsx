@@ -119,7 +119,7 @@ export function PatientFormDialog({ isOpen, onClose, patient, preSelectedDoctorI
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[600px] w-[calc(100%-2rem)] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{isEdit ? 'Edit Patient' : 'Add New Patient'}</DialogTitle>
           <DialogDescription>
@@ -142,7 +142,7 @@ export function PatientFormDialog({ isOpen, onClose, patient, preSelectedDoctorI
             {errors.name && <p className="text-xs text-red-500">{errors.name.message}</p>}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="age">Age</Label>
               <Input id="age" type="number" {...register('age')} placeholder="30" />
@@ -169,7 +169,7 @@ export function PatientFormDialog({ isOpen, onClose, patient, preSelectedDoctorI
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number</Label>
               <Input id="phone" {...register('phone')} placeholder="+1 (555) 000-0000" />
@@ -183,7 +183,7 @@ export function PatientFormDialog({ isOpen, onClose, patient, preSelectedDoctorI
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="doctor">Assigned Doctor</Label>
               <Select 

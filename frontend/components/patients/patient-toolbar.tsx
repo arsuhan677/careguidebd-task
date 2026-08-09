@@ -82,83 +82,82 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
 
   return (
     <div className="flex flex-col gap-4 mb-6">
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-        <div className="flex flex-1 w-full flex-col sm:flex-row flex-wrap gap-2">
-          <div className="relative w-full sm:w-[300px]">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-            <Input
-              placeholder="Search patients..."
-              className="pl-9 bg-white"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          
-          <Select 
-            value={currentGender || "all"} 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onValueChange={(val: any) => updateFilters('gender', val)}
-          >
-            <SelectTrigger className="w-full sm:w-[150px] bg-white">
-              <SelectValue placeholder="Gender" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Genders</SelectItem>
-              <SelectItem value="Male">Male</SelectItem>
-              <SelectItem value="Female">Female</SelectItem>
-              <SelectItem value="Other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select 
-            value={currentCondition || "all"} 
-            onValueChange={(val: any) => updateFilters('condition', val)}
-          >
-            <SelectTrigger className="w-full sm:w-[150px] bg-white">
-              <SelectValue placeholder="Condition" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Conditions</SelectItem>
-              {commonConditions.map(cond => (
-                <SelectItem key={cond} value={cond}>{cond}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select 
-            value={currentDoctor || "all"} 
-            onValueChange={(val: any) => updateFilters('doctor', val)}
-          >
-            <SelectTrigger className="w-full sm:w-[180px] bg-white">
-              <SelectValue placeholder="Doctor" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Doctors</SelectItem>
-              {doctors.map(doc => (
-                <SelectItem key={doc._id} value={doc._id}>{doc.name}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="relative w-full sm:max-w-[300px]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+          <Input
+            placeholder="Search patients..."
+            className="pl-9 bg-white h-10 w-full rounded-md border-gray-200"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
-        <Button onClick={onAddPatient} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
-          <Plus className="mr-2 h-4 w-4" /> Add Patient
+        
+        <Button onClick={onAddPatient} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 h-10 rounded-md shadow-sm">
+          <Plus className="mr-2 h-4 w-4" />
+          Add Patient
         </Button>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
-          <span className="text-sm text-gray-500 font-medium">Date:</span>
+      <div className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap items-center gap-3">
+        <Select 
+          value={currentGender || "all"} 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onValueChange={(val: any) => updateFilters('gender', val)}
+        >
+          <SelectTrigger className="w-full sm:w-[150px] bg-white h-10 rounded-md border-gray-200">
+            <SelectValue placeholder="Gender" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Genders</SelectItem>
+            <SelectItem value="Male">Male</SelectItem>
+            <SelectItem value="Female">Female</SelectItem>
+            <SelectItem value="Other">Other</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select 
+          value={currentCondition || "all"} 
+          onValueChange={(val: any) => updateFilters('condition', val)}
+        >
+          <SelectTrigger className="w-full sm:w-[150px] bg-white h-10 rounded-md border-gray-200">
+            <SelectValue placeholder="Condition" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Conditions</SelectItem>
+            {commonConditions.map(cond => (
+              <SelectItem key={cond} value={cond}>{cond}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select 
+          value={currentDoctor || "all"} 
+          onValueChange={(val: any) => updateFilters('doctor', val)}
+        >
+          <SelectTrigger className="w-full sm:w-[180px] bg-white h-10 rounded-md border-gray-200 col-span-2 sm:col-span-1">
+            <SelectValue placeholder="Doctor" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Doctors</SelectItem>
+            {doctors.map(doc => (
+              <SelectItem key={doc._id} value={doc._id}>{doc.name}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <div className="grid grid-cols-2 sm:flex sm:flex-row items-center gap-2 col-span-2 sm:col-span-1">
           <Input 
             type="date"
-            className="w-full sm:w-[140px] bg-white h-9 text-sm"
+            className="w-full sm:w-[140px] bg-white h-10 rounded-md border-gray-200"
             value={currentCreatedFrom}
             onChange={(e) => handleDateChange('createdFrom', e.target.value)}
             max={currentCreatedTo || undefined}
           />
-          <span className="hidden sm:inline text-sm text-gray-500">-</span>
+          <span className="hidden sm:inline text-gray-400 font-medium px-1">-</span>
           <Input 
             type="date"
-            className="w-full sm:w-[140px] bg-white h-9 text-sm"
+            className="w-full sm:w-[140px] bg-white h-10 rounded-md border-gray-200"
             value={currentCreatedTo}
             onChange={(e) => handleDateChange('createdTo', e.target.value)}
             min={currentCreatedFrom || undefined}
@@ -169,9 +168,10 @@ export function PatientToolbar({ onAddPatient }: PatientToolbarProps) {
           <Button 
             variant="ghost" 
             onClick={clearFilters}
-            className="h-9 px-3 text-gray-500 hover:text-gray-900"
+            className="col-span-2 sm:col-span-1 h-10 px-3 text-gray-500 hover:text-gray-900 w-full sm:w-auto mt-1 sm:mt-0"
           >
-            <X className="mr-2 h-4 w-4" /> Clear Filters
+            <X className="mr-2 h-4 w-4" />
+            Clear Filters
           </Button>
         )}
       </div>

@@ -72,24 +72,31 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
   };
 
   return (
-    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between mb-6">
-      <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center flex-wrap">
-        <div className="relative w-full sm:max-w-[250px]">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+    <div className="flex flex-col gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="relative w-full sm:max-w-[300px]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
           <Input
             placeholder="Search doctors..."
-            className="pl-9 bg-white"
+            className="pl-9 bg-white h-10 w-full rounded-md border-gray-200"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         
-          <Select 
-            value={currentSpecialization || "all"} 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onValueChange={(val: any) => updateFilters('specialization', val)}
-          >
-          <SelectTrigger className="w-full sm:w-[180px] bg-white">
+        <Button onClick={onAddDoctor} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 h-10 rounded-md shadow-sm">
+          <Plus className="mr-2 h-4 w-4" />
+          Add Doctor
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap items-center gap-3">
+        <Select 
+          value={currentSpecialization || "all"} 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onValueChange={(val: any) => updateFilters('specialization', val)}
+        >
+          <SelectTrigger className="w-full sm:w-[180px] bg-white h-10 rounded-md border-gray-200">
             <SelectValue placeholder="Specialization" />
           </SelectTrigger>
           <SelectContent>
@@ -102,12 +109,12 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
           </SelectContent>
         </Select>
 
-          <Select 
-            value={currentHospital || "all"} 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onValueChange={(val: any) => updateFilters('hospital', val)}
-          >
-          <SelectTrigger className="w-full sm:w-[180px] bg-white">
+        <Select 
+          value={currentHospital || "all"} 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onValueChange={(val: any) => updateFilters('hospital', val)}
+        >
+          <SelectTrigger className="w-full sm:w-[180px] bg-white h-10 rounded-md border-gray-200">
             <SelectValue placeholder="Hospital" />
           </SelectTrigger>
           <SelectContent>
@@ -120,18 +127,18 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
           </SelectContent>
         </Select>
 
-        <div className="flex items-center gap-2">
+        <div className="grid grid-cols-2 sm:flex sm:flex-row items-center gap-2 col-span-2 sm:col-span-1">
           <Input 
             type="date"
-            className="w-full sm:w-[135px] bg-white"
+            className="w-full sm:w-[140px] bg-white h-10 rounded-md border-gray-200"
             value={currentCreatedFrom}
             onChange={(e) => handleDateChange('createdFrom', e.target.value)}
             max={currentCreatedTo || undefined}
           />
-          <span className="text-gray-500">-</span>
+          <span className="hidden sm:inline text-gray-400 font-medium px-1">-</span>
           <Input 
             type="date"
-            className="w-full sm:w-[135px] bg-white"
+            className="w-full sm:w-[140px] bg-white h-10 rounded-md border-gray-200"
             value={currentCreatedTo}
             onChange={(e) => handleDateChange('createdTo', e.target.value)}
             min={currentCreatedFrom || undefined}
@@ -142,18 +149,13 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
           <Button 
             variant="ghost" 
             onClick={clearFilters}
-            className="text-gray-500 hover:text-gray-900"
+            className="col-span-2 sm:col-span-1 h-10 px-3 text-gray-500 hover:text-gray-900 w-full sm:w-auto mt-1 sm:mt-0"
           >
             <X className="mr-2 h-4 w-4" />
-            Clear
+            Clear Filters
           </Button>
         )}
       </div>
-
-      <Button onClick={onAddDoctor} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
-        <Plus className="mr-2 h-4 w-4" />
-        Add Doctor
-      </Button>
     </div>
   );
 }

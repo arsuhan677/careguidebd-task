@@ -34,7 +34,7 @@ export function DoctorDeleteAlert({ isOpen, onClose, doctor }: DoctorDeleteAlert
 
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <AlertDialogContent>
+      <AlertDialogContent className="sm:max-w-[600px] w-[calc(100%-2rem)] max-h-[90vh] overflow-y-auto">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>

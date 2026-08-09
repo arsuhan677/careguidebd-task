@@ -31,7 +31,7 @@ export function DoctorViewDialog({ isOpen, onClose, doctor }: DoctorViewDialogPr
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px] w-[calc(100%-2rem)] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Doctor Details</DialogTitle>
           <DialogDescription>

@@ -41,13 +41,13 @@ export function DoctorTable({ data, onView, onEdit, onDelete, onViewPatients, is
   return (
     <div className="bg-white rounded-t-xl shadow-sm border overflow-hidden">
       <div className="overflow-x-auto">
-        <Table>
+        <Table className="min-w-[750px]">
           <TableHeader className="bg-gray-50">
             <TableRow>
               <TableHead className="font-semibold text-gray-900">Name</TableHead>
               <TableHead className="font-semibold text-gray-900">Specialization</TableHead>
-              <TableHead className="font-semibold text-gray-900 hidden md:table-cell">Hospital</TableHead>
-              <TableHead className="font-semibold text-gray-900 hidden lg:table-cell">Phone</TableHead>
+              <TableHead className="font-semibold text-gray-900">Hospital</TableHead>
+              <TableHead className="font-semibold text-gray-900">Phone</TableHead>
               <TableHead className="w-[100px] font-semibold text-gray-900 text-center align-middle">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -61,10 +61,10 @@ export function DoctorTable({ data, onView, onEdit, onDelete, onViewPatients, is
                   <TableCell>
                     <Skeleton className="h-5 w-[100px] rounded-full" />
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[120px]" />
                   </TableCell>
-                  <TableCell className="hidden lg:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[120px]" />
                   </TableCell>
                   <TableCell className="text-center align-middle">
@@ -85,10 +85,10 @@ export function DoctorTable({ data, onView, onEdit, onDelete, onViewPatients, is
                       {doctor.specialization}
                     </span>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell text-gray-500">
+                  <TableCell className="text-gray-500">
                     {doctor.hospital}
                   </TableCell>
-                  <TableCell className="hidden lg:table-cell text-gray-500">
+                  <TableCell className="text-gray-500">
                     {doctor.phone}
                   </TableCell>
                   <TableCell className="text-center align-middle">

@@ -69,7 +69,7 @@ export function PatientTable({ data, onEdit, onDelete, onView, isLoading }: Pati
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
-        <Table>
+        <Table className="min-w-[1050px]">
           <TableHeader>
             <TableRow className="bg-gray-50/50 hover:bg-gray-50/50">
               <TableHead 
@@ -82,7 +82,7 @@ export function PatientTable({ data, onEdit, onDelete, onView, isLoading }: Pati
                 </div>
               </TableHead>
               <TableHead 
-                className="font-semibold cursor-pointer select-none hidden sm:table-cell"
+                className="font-semibold cursor-pointer select-none whitespace-nowrap"
                 onClick={() => handleSort('age')}
               >
                 <div className="flex items-center hover:text-gray-900">
@@ -91,7 +91,7 @@ export function PatientTable({ data, onEdit, onDelete, onView, isLoading }: Pati
                 </div>
               </TableHead>
               <TableHead 
-                className="font-semibold cursor-pointer select-none hidden md:table-cell"
+                className="font-semibold cursor-pointer select-none whitespace-nowrap"
                 onClick={() => handleSort('gender')}
               >
                 <div className="flex items-center hover:text-gray-900">
@@ -99,12 +99,12 @@ export function PatientTable({ data, onEdit, onDelete, onView, isLoading }: Pati
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </div>
               </TableHead>
-              <TableHead className="font-semibold hidden sm:table-cell">Condition</TableHead>
-              <TableHead className="font-semibold hidden lg:table-cell">Phone</TableHead>
-              <TableHead className="font-semibold hidden xl:table-cell">Email</TableHead>
-              <TableHead className="font-semibold hidden md:table-cell">Doctor</TableHead>
+              <TableHead className="font-semibold whitespace-nowrap">Condition</TableHead>
+              <TableHead className="font-semibold whitespace-nowrap">Phone</TableHead>
+              <TableHead className="font-semibold whitespace-nowrap">Email</TableHead>
+              <TableHead className="font-semibold whitespace-nowrap">Doctor</TableHead>
               <TableHead 
-                className="font-semibold cursor-pointer select-none hidden sm:table-cell whitespace-nowrap"
+                className="font-semibold cursor-pointer select-none whitespace-nowrap"
                 onClick={() => handleSort('createdAt')}
               >
                 <div className="flex items-center hover:text-gray-900">
@@ -112,7 +112,7 @@ export function PatientTable({ data, onEdit, onDelete, onView, isLoading }: Pati
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </div>
               </TableHead>
-              <TableHead className="w-[100px] font-semibold text-center align-middle">Actions</TableHead>
+              <TableHead className="w-[100px] font-semibold text-center align-middle whitespace-nowrap">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -122,25 +122,25 @@ export function PatientTable({ data, onEdit, onDelete, onView, isLoading }: Pati
                   <TableCell>
                     <Skeleton className="h-5 w-[150px]" />
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[30px]" />
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[60px] rounded-full" />
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[80px] rounded-full" />
                   </TableCell>
-                  <TableCell className="hidden lg:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[100px]" />
                   </TableCell>
-                  <TableCell className="hidden xl:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[140px]" />
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[120px]" />
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell>
                     <Skeleton className="h-5 w-[90px]" />
                   </TableCell>
                   <TableCell className="text-center align-middle">
@@ -153,35 +153,30 @@ export function PatientTable({ data, onEdit, onDelete, onView, isLoading }: Pati
             ) : (
               data.map((patient) => (
                 <TableRow key={patient._id} className="hover:bg-gray-50/50 transition-colors">
-                  <TableCell className="font-medium text-gray-900">
-                    <div className="flex flex-col">
-                      <span>{patient.name}</span>
-                      <span className="text-xs text-gray-500 sm:hidden mt-0.5">
-                        {patient.age} yrs • {patient.gender}
-                      </span>
-                    </div>
+                  <TableCell className="font-medium text-gray-900 whitespace-nowrap">
+                    {patient.name}
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell text-gray-500">
+                  <TableCell className="text-gray-500">
                     {patient.age}
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell>
                     <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-50">
                       {patient.gender}
                     </Badge>
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell text-gray-700">
+                  <TableCell className="text-gray-700">
                     <Badge variant="outline">{patient.condition}</Badge>
                   </TableCell>
-                  <TableCell className="hidden lg:table-cell text-gray-500">
+                  <TableCell className="text-gray-500 whitespace-nowrap">
                     {patient.phone}
                   </TableCell>
-                  <TableCell className="hidden xl:table-cell text-gray-500 max-w-[200px] truncate">
+                  <TableCell className="text-gray-500 max-w-[200px] truncate">
                     {patient.email}
                   </TableCell>
-                  <TableCell className="hidden md:table-cell text-gray-500">
+                  <TableCell className="text-gray-500 whitespace-nowrap">
                     {getDoctorName(patient.doctor)}
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell text-gray-500 whitespace-nowrap">
+                  <TableCell className="text-gray-500 whitespace-nowrap">
                     {format(new Date(patient.createdAt), 'MMM dd, yyyy')}
                   </TableCell>
                   <TableCell className="text-center align-middle">

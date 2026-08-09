@@ -69,7 +69,7 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl w-[95vw] md:w-[95vw] lg:w-[90vw] max-h-[90vh] overflow-hidden flex flex-col p-0">
+      <DialogContent className="max-w-7xl w-[calc(100%-2rem)] max-h-[90vh] overflow-hidden flex flex-col p-0">
         <DialogHeader className="px-6 pt-6 pb-4 border-b bg-gray-50/50 flex flex-row items-start justify-between">
           <div>
             <DialogTitle className="text-xl font-semibold text-gray-900">
@@ -114,64 +114,66 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
             </div>
           ) : (
             <div className="border rounded-md mt-4 overflow-hidden">
-              <Table>
-                <TableHeader className="bg-gray-50">
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Age</TableHead>
-                    <TableHead>Gender</TableHead>
-                    <TableHead>Phone</TableHead>
-                    <TableHead className="hidden md:table-cell">Email</TableHead>
-                    <TableHead className="hidden sm:table-cell">Registered</TableHead>
-                    <TableHead className="w-[80px] text-center">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {isLoading ? (
-                    Array.from({ length: 5 }).map((_, idx) => (
-                      <TableRow key={`skeleton-${idx}`}>
-                        <TableCell><Skeleton className="h-4 w-[120px]" /></TableCell>
-                        <TableCell><Skeleton className="h-4 w-[30px]" /></TableCell>
-                        <TableCell><Skeleton className="h-5 w-[60px] rounded-full" /></TableCell>
-                        <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
-                        <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-[150px]" /></TableCell>
-                        <TableCell className="hidden sm:table-cell"><Skeleton className="h-4 w-[90px]" /></TableCell>
-                        <TableCell><Skeleton className="h-8 w-8 mx-auto" /></TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    response?.data.map((patient) => (
-                      <TableRow key={patient._id}>
-                        <TableCell className="font-medium">{patient.name}</TableCell>
-                        <TableCell className="text-gray-500">{patient.age}</TableCell>
-                        <TableCell>
-                          <Badge variant="secondary" className="bg-blue-50 text-blue-700">
-                            {patient.gender}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-gray-500">{patient.phone}</TableCell>
-                        <TableCell className="hidden md:table-cell text-gray-500">{patient.email}</TableCell>
-                        <TableCell className="hidden sm:table-cell text-gray-500">
-                          {format(new Date(patient.createdAt), 'MMM dd, yyyy')}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50"
-                            onClick={() => {
-                              setSelectedPatient(patient);
-                              setIsDeleteOpen(true);
-                            }}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
+              <div className="overflow-x-auto">
+                <Table className="min-w-[800px]">
+                  <TableHeader className="bg-gray-50">
+                    <TableRow>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Age</TableHead>
+                      <TableHead>Gender</TableHead>
+                      <TableHead>Phone</TableHead>
+                      <TableHead className="whitespace-nowrap">Email</TableHead>
+                      <TableHead className="whitespace-nowrap">Registered</TableHead>
+                      <TableHead className="w-[80px] text-center">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {isLoading ? (
+                      Array.from({ length: 5 }).map((_, idx) => (
+                        <TableRow key={`skeleton-${idx}`}>
+                          <TableCell><Skeleton className="h-4 w-[120px]" /></TableCell>
+                          <TableCell><Skeleton className="h-4 w-[30px]" /></TableCell>
+                          <TableCell><Skeleton className="h-5 w-[60px] rounded-full" /></TableCell>
+                          <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
+                          <TableCell><Skeleton className="h-4 w-[150px]" /></TableCell>
+                          <TableCell><Skeleton className="h-4 w-[90px]" /></TableCell>
+                          <TableCell><Skeleton className="h-8 w-8 mx-auto" /></TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      response?.data.map((patient) => (
+                        <TableRow key={patient._id}>
+                          <TableCell className="font-medium">{patient.name}</TableCell>
+                          <TableCell className="text-gray-500">{patient.age}</TableCell>
+                          <TableCell>
+                            <Badge variant="secondary" className="bg-blue-50 text-blue-700">
+                              {patient.gender}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-gray-500">{patient.phone}</TableCell>
+                          <TableCell className="text-gray-500 whitespace-nowrap">{patient.email}</TableCell>
+                          <TableCell className="text-gray-500 whitespace-nowrap">
+                            {format(new Date(patient.createdAt), 'MMM dd, yyyy')}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50"
+                              onClick={() => {
+                                setSelectedPatient(patient);
+                                setIsDeleteOpen(true);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           )}
         </div>
