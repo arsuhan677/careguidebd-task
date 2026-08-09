@@ -9,9 +9,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Plus, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
+import { PatientFormDialog } from '@/components/patients/patient-form-dialog';
+import { PatientDeleteAlert } from '@/components/patients/patient-delete-alert';
+import { IPatient } from '@/types/patient';
 
 interface DoctorPatientsDialogProps {
   isOpen: boolean;
@@ -34,6 +37,10 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const debouncedSearch = useDebounce(search, 500);
+
+  const [isAddPatientOpen, setIsAddPatientOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<IPatient | null>(null);
 
   // Reset state when dialog opens or doctor changes
   useEffect(() => {
@@ -63,13 +70,19 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-7xl w-[95vw] md:w-[95vw] lg:w-[90vw] max-h-[90vh] overflow-hidden flex flex-col p-0">
-        <DialogHeader className="px-6 pt-6 pb-4 border-b bg-gray-50/50">
-          <DialogTitle className="text-xl font-semibold text-gray-900">
-            Patients of {doctor.name}
-          </DialogTitle>
-          <DialogDescription className="text-sm text-gray-500 mt-1">
-            {doctor.specialization} • {doctor.hospital}
-          </DialogDescription>
+        <DialogHeader className="px-6 pt-6 pb-4 border-b bg-gray-50/50 flex flex-row items-start justify-between">
+          <div>
+            <DialogTitle className="text-xl font-semibold text-gray-900">
+              Patients of {doctor.name}
+            </DialogTitle>
+            <DialogDescription className="text-sm text-gray-500 mt-1">
+              {doctor.specialization} • {doctor.hospital}
+            </DialogDescription>
+          </div>
+          <Button onClick={() => setIsAddPatientOpen(true)} size="sm" className="bg-blue-600 hover:bg-blue-700">
+            <Plus className="h-4 w-4 mr-2" />
+            Add Patient
+          </Button>
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
@@ -110,6 +123,7 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
                     <TableHead>Phone</TableHead>
                     <TableHead className="hidden md:table-cell">Email</TableHead>
                     <TableHead className="hidden sm:table-cell">Registered</TableHead>
+                    <TableHead className="w-[80px] text-center">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -122,6 +136,7 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
                         <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
                         <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-[150px]" /></TableCell>
                         <TableCell className="hidden sm:table-cell"><Skeleton className="h-4 w-[90px]" /></TableCell>
+                        <TableCell><Skeleton className="h-8 w-8 mx-auto" /></TableCell>
                       </TableRow>
                     ))
                   ) : (
@@ -138,6 +153,19 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
                         <TableCell className="hidden md:table-cell text-gray-500">{patient.email}</TableCell>
                         <TableCell className="hidden sm:table-cell text-gray-500">
                           {format(new Date(patient.createdAt), 'MMM dd, yyyy')}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50"
+                            onClick={() => {
+                              setSelectedPatient(patient);
+                              setIsDeleteOpen(true);
+                            }}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))
@@ -176,6 +204,18 @@ export function DoctorPatientsDialog({ isOpen, onClose, doctor }: DoctorPatients
           </div>
         )}
       </DialogContent>
+
+      <PatientFormDialog
+        isOpen={isAddPatientOpen}
+        onClose={() => setIsAddPatientOpen(false)}
+        preSelectedDoctorId={doctor._id}
+      />
+
+      <PatientDeleteAlert
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+        patient={selectedPatient}
+      />
     </Dialog>
   );
 }

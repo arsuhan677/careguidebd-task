@@ -35,9 +35,10 @@ interface PatientFormDialogProps {
   isOpen: boolean;
   onClose: () => void;
   patient?: IPatient | null; // null means Create, object means Edit
+  preSelectedDoctorId?: string;
 }
 
-export function PatientFormDialog({ isOpen, onClose, patient }: PatientFormDialogProps) {
+export function PatientFormDialog({ isOpen, onClose, patient, preSelectedDoctorId }: PatientFormDialogProps) {
   const isEdit = !!patient;
   
   const createMutation = useCreatePatient();
@@ -81,12 +82,13 @@ export function PatientFormDialog({ isOpen, onClose, patient }: PatientFormDialo
         age: undefined,
         phone: '',
         email: '',
+        doctor: preSelectedDoctorId || '',
         condition: '',
       });
       setConditionPreset('');
-      // Do not reset gender/doctor so we can let users select or keep empty
+      // Do not reset gender so we can let users select or keep empty
     }
-  }, [patient, isOpen, reset]);
+  }, [patient, isOpen, reset, preSelectedDoctorId]);
 
   const onSubmit = (data: PatientFormValues) => {
     if (isEdit) {
@@ -186,7 +188,8 @@ export function PatientFormDialog({ isOpen, onClose, patient }: PatientFormDialo
               <Label htmlFor="doctor">Assigned Doctor</Label>
               <Select 
                 onValueChange={(val: any) => setValue('doctor', val, { shouldValidate: true })}
-                defaultValue={patient ? (typeof patient.doctor === 'string' ? patient.doctor : patient.doctor._id) : undefined}
+                defaultValue={patient ? (typeof patient.doctor === 'string' ? patient.doctor : patient.doctor._id) : preSelectedDoctorId}
+                disabled={!!preSelectedDoctorId}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select assigned doctor..." />
