@@ -36,7 +36,11 @@ export const useAuth = () => {
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: Record<string, unknown>) => {
-      const res = await api.post('/auth/login', credentials);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res: any = await api.post('/auth/login', credentials);
+      if (res.token) {
+        document.cookie = `accessToken=${res.token}; path=/; max-age=604800; SameSite=Lax`;
+      }
       return res.data;
     },
     onSuccess: (data) => {
@@ -47,7 +51,11 @@ export const useAuth = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (userData: Record<string, unknown>) => {
-      const res = await api.post('/auth/register', userData);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res: any = await api.post('/auth/register', userData);
+      if (res.token) {
+        document.cookie = `accessToken=${res.token}; path=/; max-age=604800; SameSite=Lax`;
+      }
       return res.data;
     },
     onSuccess: (data) => {
@@ -59,6 +67,7 @@ export const useAuth = () => {
   const logoutMutation = useMutation({
     mutationFn: async () => {
       await api.post('/auth/logout');
+      document.cookie = 'accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
     },
     onSuccess: () => {
       queryClient.setQueryData(['authUser'], null);

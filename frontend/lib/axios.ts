@@ -12,6 +12,12 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    if (typeof window !== 'undefined') {
+      const match = document.cookie.match(/(?:^| )accessToken=([^;]+)/);
+      if (match && match[1]) {
+        config.headers.Authorization = `Bearer ${match[1]}`;
+      }
+    }
     return config;
   },
   (error) => {
