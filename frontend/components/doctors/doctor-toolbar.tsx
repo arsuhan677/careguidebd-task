@@ -30,6 +30,8 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
   const currentSearch = searchParams.get('search') || '';
   const currentSpecialization = searchParams.get('specialization') || 'all';
   const currentHospital = searchParams.get('hospital') || 'all';
+  const currentCreatedFrom = searchParams.get('createdFrom') || '';
+  const currentCreatedTo = searchParams.get('createdTo') || '';
 
   const [search, setSearch] = useState(currentSearch);
   const debouncedSearch = useDebounce(search, 500);
@@ -58,12 +60,21 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
     router.push('/doctors');
   };
 
-  const hasActiveFilters = currentSearch || currentSpecialization !== 'all' || currentHospital !== 'all';
+  const hasActiveFilters = 
+    currentSearch !== '' || 
+    currentSpecialization !== 'all' || 
+    currentHospital !== 'all' ||
+    currentCreatedFrom !== '' ||
+    currentCreatedTo !== '';
+
+  const handleDateChange = (key: 'createdFrom' | 'createdTo', value: string) => {
+    updateFilters(key, value);
+  };
 
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
-      <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="relative max-w-sm flex-1">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between mb-6">
+      <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center flex-wrap">
+        <div className="relative w-full sm:max-w-[250px]">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
           <Input
             placeholder="Search doctors..."
@@ -108,6 +119,24 @@ export function DoctorToolbar({ onAddDoctor }: DoctorToolbarProps) {
             <SelectItem value="Evercare Hospital">Evercare Hospital</SelectItem>
           </SelectContent>
         </Select>
+
+        <div className="flex items-center gap-2">
+          <Input 
+            type="date"
+            className="w-full sm:w-[135px] bg-white"
+            value={currentCreatedFrom}
+            onChange={(e) => handleDateChange('createdFrom', e.target.value)}
+            max={currentCreatedTo || undefined}
+          />
+          <span className="text-gray-500">-</span>
+          <Input 
+            type="date"
+            className="w-full sm:w-[135px] bg-white"
+            value={currentCreatedTo}
+            onChange={(e) => handleDateChange('createdTo', e.target.value)}
+            min={currentCreatedFrom || undefined}
+          />
+        </div>
 
         {hasActiveFilters && (
           <Button 

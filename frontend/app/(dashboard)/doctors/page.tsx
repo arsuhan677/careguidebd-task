@@ -23,6 +23,8 @@ export default function DoctorsPage() {
     search: searchParams.get('search') || undefined,
     specialization: searchParams.get('specialization') || undefined,
     hospital: searchParams.get('hospital') || undefined,
+    createdFrom: searchParams.get('createdFrom') || undefined,
+    createdTo: searchParams.get('createdTo') || undefined,
     sortBy: (searchParams.get('sortBy') as 'createdAt' | 'name' | 'specialization' | 'hospital') || 'createdAt',
     sortOrder: (searchParams.get('sortOrder') as 'asc' | 'desc') || 'desc',
   };

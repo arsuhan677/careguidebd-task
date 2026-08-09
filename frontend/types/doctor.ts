@@ -15,6 +15,8 @@ export interface IDoctorQuery {
   search?: string;
   specialization?: string;
   hospital?: string;
+  createdFrom?: string;
+  createdTo?: string;
   sortBy?: 'createdAt' | 'name' | 'specialization' | 'hospital';
   sortOrder?: 'asc' | 'desc';
 }
