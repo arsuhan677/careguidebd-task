@@ -238,4 +238,4 @@ Available commands defined in `package.json`:
 The application consists of a decoupled frontend and backend. In a production environment, the Express Node.js backend should be deployed to a provider such as Render or Heroku, connected to a MongoDB Atlas cluster. The Next.js frontend should be deployed to a provider like Vercel or Netlify, with the `NEXT_PUBLIC_API_URL` environment variable pointed to the live backend domain. Both applications must configure appropriate CORS rules to allow cross-origin requests.
 
 ## 15. Author
-AR Suhan (CareGuide BD)
+Aminur Rahman (Suhan) (CareGuide BD)
